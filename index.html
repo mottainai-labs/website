@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mottainai Labs</title>
 <meta name="description" content="Mottainai Labs is building the system of record for the home kitchen.">
+<meta name="theme-color" content="#f5f3ec">
 <meta property="og:title" content="Mottainai Labs">
-<meta property="og:description" content="Your kitchen doesn't know what's in it.">
+<meta property="og:description" content="Kitchens should keep their own books.">
 <meta property="og:type" content="website">
+<link rel="icon" href="assets/mark.webp" type="image/webp">
+<link rel="preload" href="assets/onest.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,42 +20,51 @@
     <img class="wordmark-glyph" src="assets/mark.webp" alt="" width="1560" height="765">
     <span>Mottainai Labs</span>
   </a>
-  <a class="bar-link" href="mailto:cole.dickerson@mottainailabsai.com">Get in touch</a>
+  <nav class="bar-nav">
+    <!-- TODO: replace with Cole's LinkedIn URL -->
+    <a class="bar-link" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="bar-link" href="mailto:cole.dickerson@mottainailabsai.com">Get in touch</a>
+  </nav>
 </header>
 
 <main>
 
-  <section class="hero">
-    <h1>Your kitchen doesn&rsquo;t know what&rsquo;s in it.</h1>
-    <p class="lede">Mottainai Labs is building the system of record for the home kitchen.</p>
-    <a class="cta" href="mailto:cole.dickerson@mottainailabsai.com">Get in touch</a>
-  </section>
-
-  <section class="band">
-    <h2>The blind spot</h2>
-    <p>Households throw away food they forgot they owned, rebuy what is already in the cupboard, and cook the same few meals on rotation. These look like three problems. They are one problem: nobody knows what is actually in the house.</p>
-    <p>Every existing fix asks you to maintain the list yourself. Nobody does. The record has to build itself, or it does not exist.</p>
-  </section>
-
-  <!-- The stage. First screen is the mark drawing itself; once the loop closes
-       it parks off the left edge and stays there while the copy scrolls past. -->
+  <!-- The whole opening is one stage. The page loads bare; scrolling paints the
+       mark on, the title card arrives and leaves, then the mark moves down to
+       the bottom left and later up as the copy advances on the right. -->
   <section class="stage">
 
     <div class="stage-mark" aria-hidden="true">
       <div class="loop-art">
-        <img class="loop-img" src="assets/mark.webp" alt="" width="1560" height="765" fetchpriority="high">
+        <svg class="loop-svg" viewBox="0 0 520 255" role="presentation" focusable="false">
+          <defs>
+            <mask id="paint" maskUnits="userSpaceOnUse" x="0" y="0" width="520" height="255">
+              <path class="paint-path" pathLength="1" fill="none" stroke="#fff"
+                    stroke-width="150" stroke-linecap="round" stroke-linejoin="round"
+                    d="M60 210 C20 195 15 120 70 85 C120 55 190 75 250 125 C310 175 360 195 420 185 C490 172 512 120 470 80 C425 38 350 45 290 90 C230 135 170 190 110 215 C85 226 70 222 60 210 Z"/>
+            </mask>
+          </defs>
+          <image href="assets/mark.webp" x="0" y="0" width="520" height="255" mask="url(#paint)"/>
+        </svg>
       </div>
     </div>
 
     <div class="stage-flow">
 
-      <div class="step">
-        <h2>One continuous record</h2>
-        <p>We are building a single live inventory of the kitchen, kept current by what already happens there: what you buy, what you put away, what you use.</p>
-        <p>Everything people actually want sits downstream of that record. Recipes from what is on hand. Restocking before you run out. Nutrition measured over months instead of guessed at.</p>
+      <div class="title-card">
+        <h1>Kitchens should keep their own books.</h1>
+        <p class="lede">Mottainai Labs is building the system of record for the home kitchen.</p>
       </div>
 
       <div class="step">
+        <h2>The blind spot</h2>
+        <p>Households throw away food they forgot they owned, rebuy what is already in the cupboard, and cook the same few meals on rotation. These look like three problems. They are one problem: nobody knows what is actually in the house.</p>
+        <p>Every existing fix asks you to maintain the list yourself. Nobody does. The record has to build itself, or it does not exist.</p>
+      </div>
+
+      <div class="step">
+        <h2>One continuous record</h2>
+        <p>We are building a single live inventory of the kitchen, kept current by what already happens there: what you buy, what you put away, what you use.</p>
         <ul class="legend">
           <li><b>What comes in</b>Groceries, receipts, something new on the shelf.</li>
           <li><b>The record</b>One live inventory that everything passes through.</li>
@@ -83,10 +95,12 @@
 
   <section class="contact">
     <div class="card">
-      <img class="card-glyph" src="assets/mark.webp" alt="" width="1560" height="765">
+      <img class="card-glyph" src="assets/mark.webp" alt="" width="1560" height="765" loading="lazy">
       <h2>Talk to us</h2>
       <p>We are early, building fast, and happy to go deep on any of it.</p>
       <a class="cta" href="mailto:cole.dickerson@mottainailabsai.com">cole.dickerson@mottainailabsai.com</a>
+      <!-- TODO: replace with Cole's LinkedIn URL -->
+      <a class="cta cta-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
       <p class="card-meta">Cole Dickerson, Founder</p>
     </div>
   </section>

@@ -1,5 +1,7 @@
-/* Mottainai Labs. Tokens lifted from 2week-demo/web/css/app.css so the site and
-   the product read as one system. */
+/* Mottainai Labs.
+   One theme, locked light: cream, green, terracotta, matching the app.
+   Tokens come from 2week-demo/web/css/app.css so the site and the product
+   read as one system. */
 
 @font-face {
   font-family: 'Onest';
@@ -9,33 +11,21 @@
 }
 
 :root {
-  --cream:    #f5f3ec;
-  --card:     #fbfaf4;
-  --ink:      #1c1c1a;
-  --pine:     #085041;
-  --sage:     #5e9a78;
-  --clay:     #c97b3c;
-  --dim:      rgba(28, 28, 26, .58);
-  --hairline: rgba(28, 28, 26, .12);
+  --cream:     #f5f3ec;
+  --card:      #fbfaf4;
+  --ink:       #1c1c1a;
+  --pine:      #085041;
+  --sage:      #5e9a78;
+  --terracotta:#c97b3c;   /* graphics and rules */
+  --clay-text: #8a4e1e;   /* same accent, dark enough to read as text */
+  --dim:       rgba(28, 28, 26, .64);
+  --hairline:  rgba(28, 28, 26, .12);
 
-  --measure: 34rem;
-  --gutter: clamp(1.5rem, 6vw, 7rem);
+  --measure: 32rem;
+  --gutter: clamp(1.5rem, 5vw, 6rem);
+  --bar: 64px;
 
   color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --cream:    #101512;
-    --card:     #161d19;
-    --ink:      #e8e6dd;
-    --pine:     #7ab894;
-    --sage:     #4d8567;
-    --clay:     #d99358;
-    --dim:      rgba(232, 230, 221, .58);
-    --hairline: rgba(232, 230, 221, .14);
-    color-scheme: dark;
-  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -46,14 +36,13 @@ body {
   color: var(--ink);
   font-family: 'Onest', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.0625rem;
-  line-height: 1.68;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
-.mark-defs { position: absolute; }
-
 a { color: var(--pine); text-underline-offset: 3px; }
+
+:focus-visible { outline: 2px solid var(--clay-text); outline-offset: 3px; border-radius: 4px; }
 
 /* ---- top bar ---------------------------------------------------------- */
 
@@ -65,27 +54,29 @@ a { color: var(--pine); text-underline-offset: 3px; }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  height: 68px;
+  height: var(--bar);
   padding: 0 var(--gutter);
-  background: color-mix(in srgb, var(--cream) 86%, transparent);
+  background: color-mix(in srgb, var(--cream) 88%, transparent);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid transparent;
 }
 
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: .6rem;
+  gap: .55rem;
+  padding: .6rem 0;
   text-decoration: none;
   color: var(--ink);
   font-weight: 600;
   letter-spacing: -.01em;
   white-space: nowrap;
 }
+.wordmark-glyph { width: 32px; height: auto; flex: none; }
 
-.wordmark-glyph { width: 34px; height: auto; flex: none; }
+.bar-nav { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); }
 
 .bar-link {
+  padding: .7rem 0;
   font-size: .9375rem;
   color: var(--dim);
   text-decoration: none;
@@ -93,254 +84,259 @@ a { color: var(--pine); text-underline-offset: 3px; }
 }
 .bar-link:hover { color: var(--pine); }
 
-/* ---- hero ------------------------------------------------------------- */
-
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: calc(100dvh - 68px);
-  padding: clamp(2rem, 6vh, 4rem) var(--gutter);
-  max-width: 58rem;
-}
+/* ---- typography ------------------------------------------------------- */
 
 h1 {
   margin: 0;
-  font-size: clamp(2.5rem, 6.6vw, 4.75rem);
+  font-size: clamp(2.25rem, 5.6vw, 4rem);
   font-weight: 800;
-  line-height: 1.03;
+  line-height: 1.05;
   letter-spacing: -.035em;
   color: var(--pine);
   text-wrap: balance;
 }
 
+h2 {
+  margin: 0 0 .85rem;
+  font-size: clamp(1.4375rem, 2.4vw, 1.875rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.18;
+  color: var(--pine);
+}
+
+p { margin: 0 0 .85rem; max-width: var(--measure); }
+p:last-child { margin-bottom: 0; }
+
 .lede {
-  margin: 1.5rem 0 0;
-  max-width: 34rem;
-  font-size: clamp(1.125rem, 2.2vw, 1.4375rem);
-  line-height: 1.5;
+  margin: 1.1rem auto 0;
+  max-width: 30rem;
+  font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+  line-height: 1.45;
   color: var(--dim);
 }
 
+.note { color: var(--dim); font-size: .9375rem; }
+
+.band { padding: clamp(4rem, 10vh, 7rem) var(--gutter); max-width: calc(var(--measure) + var(--gutter) * 2); }
+
+/* ---- buttons ---------------------------------------------------------- */
+
 .cta {
   display: inline-block;
-  padding: .85rem 1.6rem;
+  padding: .8rem 1.5rem;
   border-radius: 999px;
   background: var(--pine);
   color: var(--cream);
+  border: 1px solid var(--pine);
   font-weight: 600;
   font-size: 1rem;
   text-decoration: none;
   transition: transform .18s cubic-bezier(.16,1,.3,1), opacity .18s;
 }
-.hero .cta { align-self: flex-start; margin-top: 2.5rem; }
 .cta:hover { opacity: .9; }
 .cta:active { transform: translateY(1px); }
 
-/* ---- plain sections --------------------------------------------------- */
-
-.band {
-  padding: clamp(6rem, 16vh, 11rem) var(--gutter);
-  max-width: calc(var(--measure) + var(--gutter) * 2);
-}
-
-h2 {
-  margin: 0 0 1.25rem;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -.02em;
-  line-height: 1.2;
-  color: var(--pine);
-}
-
-p { margin: 0 0 1.15rem; max-width: var(--measure); }
-p:last-child { margin-bottom: 0; }
-
-.note { color: var(--dim); font-size: .9375rem; }
+.cta-ghost { background: transparent; color: var(--pine); }
+.cta-ghost:hover { background: color-mix(in srgb, var(--pine) 8%, transparent); opacity: 1; }
 
 /* ---- the stage -------------------------------------------------------- */
-/* Sticky mark, scrolling copy. The mark draws itself over the first screen,
-   then parks at the bottom left and stays while the copy passes on the right. */
+/* The page opens bare. Scrolling paints the mark on, brings the title card in
+   and out, then moves the mark bottom left and later up as copy advances. */
 
 .stage { position: relative; }
 
-/* The negative margin belongs on the flow, not on the sticky element. Putting it
-   here would collapse the mark's margin box and let it slide a whole viewport
-   past the end of the stage, over the section below. */
 .stage-mark {
   position: sticky;
-  top: 68px;
-  height: calc(100dvh - 68px);
+  top: var(--bar);
+  height: calc(100dvh - var(--bar));
   display: grid;
   place-items: center;
   pointer-events: none;
   z-index: 0;
 }
 
-.loop-art {
-  width: min(58vw, 40rem);
-  transform-origin: center;
-}
+.loop-art { width: min(80vw, 64rem); transform-origin: center; }
+.loop-svg { display: block; width: 100%; height: auto; }
 
-.loop-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  clip-path: inset(0 0 0 0);   /* default is the finished mark; motion is enhancement */
-}
+/* Default is the finished mark, so any failure below still shows the logo. */
+.paint-path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
 .stage-flow {
   position: relative;
   z-index: 1;
-  margin-top: calc(68px - 100dvh);      /* ride back up over the sticky mark */
-  padding-top: calc(100dvh - 68px);     /* first screen belongs to the mark alone */
-  padding-bottom: 14vh;
+  margin-top: calc(var(--bar) - 100dvh);
+  padding-top: 200dvh;          /* the mark owns the first two screens */
+  padding-bottom: 16vh;
 }
 
-.step {
-  min-height: 78vh;
+.title-card {
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-left: auto;
-  width: min(var(--measure), 46%);
+  justify-content: flex-end;    /* sits under the lifted mark, per the storyboard */
+  align-items: center;
+  text-align: center;
+  padding: 0 var(--gutter) 9vh;
+}
+.title-card h1 { max-width: 20ch; }
+
+/* Copy sits in the upper right while the mark holds the lower left. */
+.step {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 14vh;
   padding-right: var(--gutter);
+  margin-left: auto;
+  width: min(var(--measure), 40%);
 }
 
-/* The ribbon wipes into existence along its length, then parks bottom left at
-   roughly a third of the screen and stays there while the copy scrolls past. */
-@keyframes form { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-@keyframes park { to { transform: translate(-34vw, 30vh) scale(.56); } }
-@keyframes reveal {
-  0%       { opacity: 0; transform: translateY(26px); }
-  18%, 76% { opacity: 1; transform: none; }
-  100%     { opacity: 0; transform: translateY(-16px); }
+@keyframes paint { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+/* One animation carries the mark's whole journey so the two moves cannot
+   fight over the transform property. */
+@keyframes journey {
+  0%,  22%      { transform: translate(0, 0) scale(1); }            /* painted, centred */
+  32%, 46%      { transform: translate(0, -17vh) scale(.7); }       /* lifts to clear the title */
+  56%, 82%      { transform: translate(-21vw, 22vh) scale(.74); }   /* bottom left, still large */
+  92%, 100%     { transform: translate(-27vw, -4vh) scale(.62); }   /* up left as copy advances */
 }
+
+/* The title card is a title: it is meant to arrive and leave. Body copy below
+   fades in and holds, because dimming text while it is being read reads as a
+   rendering fault. */
+@keyframes titlecard {
+  0%,  27%      { opacity: 0; transform: translateY(24px); }
+  36%, 46%      { opacity: 1; transform: none; }
+  56%, 100%     { opacity: 0; transform: translateY(-16px); }
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 
 @supports (animation-timeline: view()) {
   .stage { view-timeline-name: --stage; view-timeline-axis: block; }
 
-  .loop-img {
-    clip-path: inset(0 100% 0 0);
-    animation: form linear both;
+  .paint-path {
+    stroke-dashoffset: 1;
+    animation: paint linear both;
     animation-timeline: --stage;
     animation-range: contain 0% contain 13%;
   }
   .loop-art {
-    animation: park linear both;
+    animation: journey linear both;
     animation-timeline: --stage;
-    animation-range: contain 14% contain 25%;
+    animation-range: contain 0% contain 100%;
+  }
+  .title-card {
+    animation: titlecard linear both;
+    animation-timeline: --stage;
+    animation-range: contain 0% contain 100%;
   }
   .step {
-    animation: reveal linear both;
+    animation: rise linear both;
     animation-timeline: view();
-    animation-range: entry 15% exit 35%;
+    animation-range: entry 62% entry 100%;
   }
 }
 
-/* Fallback for engines without scroll-driven animations. app.js adds the
-   classes only after confirming it can drive them. */
-.stage.js .loop-img { clip-path: inset(0 100% 0 0); }
-.stage.js.drawn .loop-img { animation: form 1.5s cubic-bezier(.16,1,.3,1) both; }
+/* Fallback for engines without scroll-driven animations. */
+.stage.js .paint-path { stroke-dashoffset: 1; }
+.stage.js.drawn .paint-path { animation: paint 2s cubic-bezier(.33,1,.68,1) both; }
 .stage.js.parked .loop-art {
-  transform: translate(-34vw, 30vh) scale(.56);
+  transform: translate(-21vw, 24vh) scale(.74);
   transition: transform 1s cubic-bezier(.16,1,.3,1);
 }
-.stage.js .step { opacity: 0; transform: translateY(26px); }
+.stage.js .step { opacity: 0; transform: translateY(22px); }
 .stage.js .step.in {
-  opacity: 1;
-  transform: none;
+  opacity: 1; transform: none;
   transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
 }
 
 /* ---- legend ----------------------------------------------------------- */
 
-.legend { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 1.25rem; }
+.legend { list-style: none; margin: 0 0 .85rem; padding: 0; display: grid; gap: .85rem; }
 .legend li {
-  padding-top: .7rem;
+  padding-top: .55rem;
   border-top: 2px solid var(--sage);
   font-size: .9375rem;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--dim);
 }
-.legend li:nth-child(2) { border-top-color: var(--pine); }
-.legend b { display: block; margin-bottom: .15rem; color: var(--ink); font-weight: 600; }
+.legend li:nth-child(2) { border-top-color: var(--terracotta); }
+.legend b { display: block; color: var(--ink); font-weight: 600; }
 
 /* ---- current state ---------------------------------------------------- */
 
-.state { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.75rem 2rem; margin: 1.75rem 0; }
-.cell b { display: block; font-size: 1.0625rem; font-weight: 600; letter-spacing: -.01em; }
-.cell span { display: block; margin-top: .1rem; font-size: .9375rem; color: var(--dim); }
-.cell .eval { color: var(--clay); }
+.state { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.25rem 1.5rem; margin: 1.25rem 0; }
+.cell b { display: block; font-size: 1rem; font-weight: 600; letter-spacing: -.01em; }
+.cell span { display: block; font-size: .9375rem; color: var(--dim); }
+.cell .eval { color: var(--clay-text); font-weight: 600; }
 
 /* ---- mottainai -------------------------------------------------------- */
 
-.mottainai h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); letter-spacing: .02em; line-height: 1.3; }
+.mottainai h2 { font-size: clamp(1.75rem, 3.6vw, 2.375rem); letter-spacing: .02em; line-height: 1.3; }
 
 /* ---- contact card ----------------------------------------------------- */
 
-.contact {
-  display: grid;
-  place-items: center;
-  padding: clamp(3rem, 10vh, 7rem) var(--gutter) clamp(4rem, 12vh, 8rem);
-}
+.contact { display: grid; place-items: center; padding: clamp(2rem, 6vh, 4rem) var(--gutter) clamp(3rem, 9vh, 6rem); }
 
 .card {
-  width: min(30rem, 100%);
-  padding: clamp(2rem, 5vw, 3rem);
+  width: min(29rem, 100%);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
   border-radius: 20px;
   background: var(--card);
   border: 1px solid var(--hairline);
   text-align: center;
 }
-.card-glyph { width: 64px; height: auto; margin: 0 auto 1.25rem; display: block; }
-.card h2 { margin-bottom: .75rem; }
+.card-glyph { width: 60px; height: auto; margin: 0 auto 1rem; display: block; }
+.card h2 { margin-bottom: .6rem; }
 .card p { max-width: none; color: var(--dim); }
-.card .cta { margin: 1.25rem 0 1.5rem; word-break: break-word; }
-.card-meta { font-size: .9375rem; margin: 0; }
+.card .cta { margin: .5rem 0 0; word-break: break-word; }
+.card .cta:first-of-type { margin-top: 1.25rem; }
+.card-meta { font-size: .9375rem; margin: 1.25rem 0 0; }
 
 /* ---- footer ----------------------------------------------------------- */
 
 .foot {
-  padding: 2rem var(--gutter) 3rem;
+  padding: 1.5rem var(--gutter) 2.5rem;
   border-top: 1px solid var(--hairline);
   display: flex;
   flex-wrap: wrap;
   gap: .35rem 2rem;
   justify-content: space-between;
+  align-items: center;
   font-size: .9375rem;
   color: var(--dim);
 }
 .foot p { margin: 0; max-width: none; }
+.foot a { display: inline-block; padding: .6rem 0; }
 
 /* ---- small screens ---------------------------------------------------- */
-/* No sticky split on phones: the mark sits above the copy, drawn and still. */
 
-@media (max-width: 860px) {
-  .stage-mark {
-    position: static;
-    height: auto;
-    margin-bottom: 0;
-    padding: 3rem var(--gutter) 0;
-  }
+@media (max-width: 900px) {
+  .stage-mark { position: static; height: auto; padding: 1.5rem var(--gutter) 0; }
   .loop-art { width: 100%; animation: none !important; transform: none !important; }
-  .loop-img { animation: none !important; clip-path: none !important; }
+  .paint-path { animation: none !important; stroke-dashoffset: 0 !important; }
   .stage-flow { margin-top: 0; padding-top: 0; padding-bottom: 0; }
-  .step {
-    width: 100%;
-    min-height: 0;
-    padding: 3rem var(--gutter);
-    margin-left: 0;
+  .title-card {
+    min-height: 0; padding: 2rem var(--gutter) 1rem;
+    animation: none !important; opacity: 1 !important; transform: none !important;
+    text-align: left; align-items: flex-start;
   }
-  .state { grid-template-columns: 1fr; gap: 1.5rem; }
+  .title-card .lede { margin-left: 0; }
+  .step { width: 100%; min-height: 0; margin-left: 0; padding: 2.5rem var(--gutter); }
+  .state { grid-template-columns: 1fr; gap: 1.1rem; }
 }
 
 /* ---- reduced motion --------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .loop-img  { animation: none !important; clip-path: none !important; }
-  .loop-art  { animation: none !important; }
-  .step      { animation: none !important; opacity: 1 !important; transform: none !important; }
-  .cta       { transition: none; }
+  .paint-path { animation: none !important; stroke-dashoffset: 0 !important; }
+  .loop-art   { animation: none !important; }
+  .title-card { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .step       { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .cta        { transition: none; }
   .stage.js.parked .loop-art { transition: none; }
 }
