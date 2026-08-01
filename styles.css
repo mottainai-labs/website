@@ -171,7 +171,7 @@ p:last-child { margin-bottom: 0; }
   z-index: 1;
   margin-top: calc(var(--bar) - 100dvh);
   padding-top: 200dvh;          /* the mark owns the first two screens */
-  padding-bottom: 16vh;
+  padding-bottom: 2vh;
 }
 
 .title-card {
@@ -181,7 +181,7 @@ p:last-child { margin-bottom: 0; }
   justify-content: flex-end;    /* sits under the lifted mark, per the storyboard */
   align-items: center;
   text-align: center;
-  padding: 0 var(--gutter) 6vh;
+  padding: 0 var(--gutter) 20vh;
 }
 .title-card h1 { max-width: 20ch; }
 
@@ -206,11 +206,17 @@ p:last-child { margin-bottom: 0; }
    the stage, so it drifts up alongside all three copy sections. */
 /* One size throughout. The parked scale is the reference; the opening beats
    match it so the mark never appears to jump size between sequences. */
+/* Paints at a size that leaves room for the title, so mark and headline share
+   one screen with nothing cut off. It then grows to the parked scale as the
+   copy sections arrive. */
+/* No holds after the paint. Every stop is a single keyframe, so the mark is
+   always in motion once painting ends and it travels with the copy rather
+   than settling, waiting, then moving again. */
 @keyframes journey {
-  0%,  22%      { transform: translate(0, 0) scale(.88); }           /* painted, centred */
-  32%, 50%      { transform: translate(0, -24vh) scale(.84); }       /* lifts clear of the title */
-  64%           { transform: translate(-27vw, 20vh) scale(.86); }    /* left, cropped, low */
-  100%          { transform: translate(-27vw, -18vh) scale(.86); }   /* slow drift upward */
+  0%,  18%      { transform: translate(0, 0) scale(.58); }           /* painted, centred */
+  44%           { transform: translate(0, -15vh) scale(.62); }       /* rises with the title */
+  64%           { transform: translate(-27vw, 20vh) scale(.86); }    /* grows, moves left, cropped */
+  100%          { transform: translate(-27vw, -18vh) scale(.86); }   /* drifts up with the sections */
 }
 
 /* The title card is a title: it is meant to arrive and leave. Body copy below
