@@ -156,11 +156,14 @@ p:last-child { margin-bottom: 0; }
   z-index: 0;
 }
 
-.loop-art { width: min(80vw, 64rem); transform-origin: center; }
+.loop-art { width: min(74vw, 58rem); transform-origin: center; }
 .loop-svg { display: block; width: 100%; height: auto; }
 
-/* Default is the finished mark, so any failure below still shows the logo. */
-.paint-path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+/* Default is the finished mark, so any failure below still shows the logo.
+   Dash runs slightly past the full path (1.04) so the flat brush ends overlap
+   at the closing join instead of leaving a wedge of artwork unpainted. The
+   gap is longer than the dash so nothing wraps into view at the hidden end. */
+.paint-path { stroke-dasharray: 1.04 2; stroke-dashoffset: 0; }
 
 .stage-flow {
   position: relative;
@@ -190,19 +193,20 @@ p:last-child { margin-bottom: 0; }
   padding-top: 14vh;
   padding-right: var(--gutter);
   margin-left: auto;
-  width: min(var(--measure), 40%);
+  width: min(34rem, 42%);
 }
 
-@keyframes paint { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes paint { from { stroke-dashoffset: 1.04; } to { stroke-dashoffset: 0; } }
 
 /* One animation carries the mark's whole journey so the two moves cannot
    fight over the transform property. */
-/* The mark holds full size and slides off the left edge, so it stays large and
-   is cropped by the frame rather than shrinking to fit inside it. */
+/* Painted centre stage, then off to the left where it stays large and cropped
+   by the frame. From there it rises slowly and continuously for the rest of
+   the stage, so it drifts up alongside all three copy sections. */
 @keyframes journey {
-  0%,  50%      { transform: translate(0, 0) scale(1); }            /* painted, centred */
-  62%, 84%      { transform: translate(-36vw, 16vh) scale(1); }     /* left, full size, part cropped */
-  93%, 100%     { transform: translate(-42vw, -6vh) scale(.95); }   /* rises as copy advances */
+  0%,  50%      { transform: translate(0, 0) scale(1); }             /* painted, centred */
+  64%           { transform: translate(-30vw, 24vh) scale(.72); }    /* left, cropped, low */
+  100%          { transform: translate(-30vw, -14vh) scale(.72); }   /* slow drift upward */
 }
 
 /* The title card is a title: it is meant to arrive and leave. Body copy below
@@ -222,7 +226,7 @@ p:last-child { margin-bottom: 0; }
   .stage { view-timeline-name: --stage; view-timeline-axis: block; }
 
   .paint-path {
-    stroke-dashoffset: 1;
+    stroke-dashoffset: 1.04;
     animation: paint linear both;
     animation-timeline: --stage;
     animation-range: contain 0% contain 13%;
@@ -245,7 +249,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 /* Fallback for engines without scroll-driven animations. */
-.stage.js .paint-path { stroke-dashoffset: 1; }
+.stage.js .paint-path { stroke-dashoffset: 1.04; }
 .stage.js.drawn .paint-path { animation: paint 2s cubic-bezier(.33,1,.68,1) both; }
 .stage.js.parked .loop-art {
   transform: translate(-21vw, 24vh) scale(.74);
@@ -284,8 +288,8 @@ p:last-child { margin-bottom: 0; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
   align-items: stretch;
-  padding: clamp(3rem, 9vh, 6rem) var(--gutter) clamp(3rem, 9vh, 6rem);
-  max-width: 78rem;
+  padding: clamp(1rem, 3vh, 2rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+  max-width: 74rem;
   margin-inline: auto;
 }
 
