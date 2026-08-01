@@ -32,12 +32,36 @@
 
 body {
   margin: 0;
-  background: var(--cream);
+  /* Not a flat field: two very soft brand-tinted washes over the cream so the
+     background has tonal movement without reading as a gradient. */
+  background:
+    radial-gradient(1100px 780px at 10% 6%,  color-mix(in srgb, var(--sage) 13%, transparent), transparent 62%),
+    radial-gradient(900px 700px at 92% 70%,  color-mix(in srgb, var(--terracotta) 8%, transparent), transparent 60%),
+    var(--cream);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: 'Onest', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.0625rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Fine grain, so the page reads as paper rather than screen. Fixed and
+   pointer-events:none: grain on a scrolling container repaints every frame
+   and destroys mobile framerate. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: .5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body::after { display: none; }
 }
 
 a { color: var(--pine); text-underline-offset: 3px; }
@@ -157,7 +181,13 @@ p:last-child { margin-bottom: 0; }
   z-index: 0;
 }
 
-.loop-art { width: min(92vw, 76rem); transform-origin: center; }
+.loop-art {
+  /* Capped by height as well as width. The mark is 2.04:1, so on a short
+     viewport a width-only size makes it too tall and pushes the title below
+     the fold. 96vh keeps mark and title on one screen at any window shape. */
+  width: min(92vw, 76rem, 96vh);
+  transform-origin: center;
+}
 .loop-svg { display: block; width: 100%; height: auto; }
 
 /* Default is the finished mark, so any failure below still shows the logo.
@@ -181,7 +211,7 @@ p:last-child { margin-bottom: 0; }
   justify-content: flex-end;    /* sits under the lifted mark, per the storyboard */
   align-items: center;
   text-align: center;
-  padding: 0 var(--gutter) 20vh;
+  padding: 0 var(--gutter) 18vh;
 }
 .title-card h1 { max-width: 20ch; }
 
@@ -213,10 +243,10 @@ p:last-child { margin-bottom: 0; }
    always in motion once painting ends and it travels with the copy rather
    than settling, waiting, then moving again. */
 @keyframes journey {
-  0%,  18%      { transform: translate(0, 0) scale(.58); }           /* painted, centred */
-  44%           { transform: translate(0, -15vh) scale(.62); }       /* rises with the title */
-  64%           { transform: translate(-27vw, 20vh) scale(.86); }    /* grows, moves left, cropped */
-  100%          { transform: translate(-27vw, -18vh) scale(.86); }   /* drifts up with the sections */
+  0%,  18%      { transform: translate(0, 0) scale(1); }             /* painted, centred, alone */
+  44%           { transform: translate(0, -19vh) scale(.58); }       /* rises, makes room for title */
+  64%           { transform: translate(-27vw, 20vh) scale(1.35); }   /* grows, moves left, cropped */
+  100%          { transform: translate(-27vw, -18vh) scale(1.35); }  /* drifts up with the sections */
 }
 
 /* The title card is a title: it is meant to arrive and leave. Body copy below
