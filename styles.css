@@ -1,0 +1,346 @@
+/* Mottainai Labs. Tokens lifted from 2week-demo/web/css/app.css so the site and
+   the product read as one system. */
+
+@font-face {
+  font-family: 'Onest';
+  src: url('assets/onest.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --cream:    #f5f3ec;
+  --card:     #fbfaf4;
+  --ink:      #1c1c1a;
+  --pine:     #085041;
+  --sage:     #5e9a78;
+  --clay:     #c97b3c;
+  --dim:      rgba(28, 28, 26, .58);
+  --hairline: rgba(28, 28, 26, .12);
+
+  --measure: 34rem;
+  --gutter: clamp(1.5rem, 6vw, 7rem);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cream:    #101512;
+    --card:     #161d19;
+    --ink:      #e8e6dd;
+    --pine:     #7ab894;
+    --sage:     #4d8567;
+    --clay:     #d99358;
+    --dim:      rgba(232, 230, 221, .58);
+    --hairline: rgba(232, 230, 221, .14);
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Onest', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.mark-defs { position: absolute; }
+
+a { color: var(--pine); text-underline-offset: 3px; }
+
+/* ---- top bar ---------------------------------------------------------- */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 68px;
+  padding: 0 var(--gutter);
+  background: color-mix(in srgb, var(--cream) 86%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+.wordmark-glyph { width: 34px; height: auto; flex: none; }
+
+.bar-link {
+  font-size: .9375rem;
+  color: var(--dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bar-link:hover { color: var(--pine); }
+
+/* ---- hero ------------------------------------------------------------- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100dvh - 68px);
+  padding: clamp(2rem, 6vh, 4rem) var(--gutter);
+  max-width: 58rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 6.6vw, 4.75rem);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -.035em;
+  color: var(--pine);
+  text-wrap: balance;
+}
+
+.lede {
+  margin: 1.5rem 0 0;
+  max-width: 34rem;
+  font-size: clamp(1.125rem, 2.2vw, 1.4375rem);
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.cta {
+  display: inline-block;
+  padding: .85rem 1.6rem;
+  border-radius: 999px;
+  background: var(--pine);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform .18s cubic-bezier(.16,1,.3,1), opacity .18s;
+}
+.hero .cta { align-self: flex-start; margin-top: 2.5rem; }
+.cta:hover { opacity: .9; }
+.cta:active { transform: translateY(1px); }
+
+/* ---- plain sections --------------------------------------------------- */
+
+.band {
+  padding: clamp(6rem, 16vh, 11rem) var(--gutter);
+  max-width: calc(var(--measure) + var(--gutter) * 2);
+}
+
+h2 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  color: var(--pine);
+}
+
+p { margin: 0 0 1.15rem; max-width: var(--measure); }
+p:last-child { margin-bottom: 0; }
+
+.note { color: var(--dim); font-size: .9375rem; }
+
+/* ---- the stage -------------------------------------------------------- */
+/* Sticky mark, scrolling copy. The mark draws itself over the first screen,
+   then parks at the bottom left and stays while the copy passes on the right. */
+
+.stage { position: relative; }
+
+/* The negative margin belongs on the flow, not on the sticky element. Putting it
+   here would collapse the mark's margin box and let it slide a whole viewport
+   past the end of the stage, over the section below. */
+.stage-mark {
+  position: sticky;
+  top: 68px;
+  height: calc(100dvh - 68px);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.loop-art {
+  width: min(58vw, 40rem);
+  transform-origin: center;
+}
+
+.loop-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  clip-path: inset(0 0 0 0);   /* default is the finished mark; motion is enhancement */
+}
+
+.stage-flow {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(68px - 100dvh);      /* ride back up over the sticky mark */
+  padding-top: calc(100dvh - 68px);     /* first screen belongs to the mark alone */
+  padding-bottom: 14vh;
+}
+
+.step {
+  min-height: 78vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  width: min(var(--measure), 46%);
+  padding-right: var(--gutter);
+}
+
+/* The ribbon wipes into existence along its length, then parks bottom left at
+   roughly a third of the screen and stays there while the copy scrolls past. */
+@keyframes form { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes park { to { transform: translate(-34vw, 30vh) scale(.56); } }
+@keyframes reveal {
+  0%       { opacity: 0; transform: translateY(26px); }
+  18%, 76% { opacity: 1; transform: none; }
+  100%     { opacity: 0; transform: translateY(-16px); }
+}
+
+@supports (animation-timeline: view()) {
+  .stage { view-timeline-name: --stage; view-timeline-axis: block; }
+
+  .loop-img {
+    clip-path: inset(0 100% 0 0);
+    animation: form linear both;
+    animation-timeline: --stage;
+    animation-range: contain 0% contain 13%;
+  }
+  .loop-art {
+    animation: park linear both;
+    animation-timeline: --stage;
+    animation-range: contain 14% contain 25%;
+  }
+  .step {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 15% exit 35%;
+  }
+}
+
+/* Fallback for engines without scroll-driven animations. app.js adds the
+   classes only after confirming it can drive them. */
+.stage.js .loop-img { clip-path: inset(0 100% 0 0); }
+.stage.js.drawn .loop-img { animation: form 1.5s cubic-bezier(.16,1,.3,1) both; }
+.stage.js.parked .loop-art {
+  transform: translate(-34vw, 30vh) scale(.56);
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+}
+.stage.js .step { opacity: 0; transform: translateY(26px); }
+.stage.js .step.in {
+  opacity: 1;
+  transform: none;
+  transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
+}
+
+/* ---- legend ----------------------------------------------------------- */
+
+.legend { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 1.25rem; }
+.legend li {
+  padding-top: .7rem;
+  border-top: 2px solid var(--sage);
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: var(--dim);
+}
+.legend li:nth-child(2) { border-top-color: var(--pine); }
+.legend b { display: block; margin-bottom: .15rem; color: var(--ink); font-weight: 600; }
+
+/* ---- current state ---------------------------------------------------- */
+
+.state { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.75rem 2rem; margin: 1.75rem 0; }
+.cell b { display: block; font-size: 1.0625rem; font-weight: 600; letter-spacing: -.01em; }
+.cell span { display: block; margin-top: .1rem; font-size: .9375rem; color: var(--dim); }
+.cell .eval { color: var(--clay); }
+
+/* ---- mottainai -------------------------------------------------------- */
+
+.mottainai h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); letter-spacing: .02em; line-height: 1.3; }
+
+/* ---- contact card ----------------------------------------------------- */
+
+.contact {
+  display: grid;
+  place-items: center;
+  padding: clamp(3rem, 10vh, 7rem) var(--gutter) clamp(4rem, 12vh, 8rem);
+}
+
+.card {
+  width: min(30rem, 100%);
+  padding: clamp(2rem, 5vw, 3rem);
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  text-align: center;
+}
+.card-glyph { width: 64px; height: auto; margin: 0 auto 1.25rem; display: block; }
+.card h2 { margin-bottom: .75rem; }
+.card p { max-width: none; color: var(--dim); }
+.card .cta { margin: 1.25rem 0 1.5rem; word-break: break-word; }
+.card-meta { font-size: .9375rem; margin: 0; }
+
+/* ---- footer ----------------------------------------------------------- */
+
+.foot {
+  padding: 2rem var(--gutter) 3rem;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem 2rem;
+  justify-content: space-between;
+  font-size: .9375rem;
+  color: var(--dim);
+}
+.foot p { margin: 0; max-width: none; }
+
+/* ---- small screens ---------------------------------------------------- */
+/* No sticky split on phones: the mark sits above the copy, drawn and still. */
+
+@media (max-width: 860px) {
+  .stage-mark {
+    position: static;
+    height: auto;
+    margin-bottom: 0;
+    padding: 3rem var(--gutter) 0;
+  }
+  .loop-art { width: 100%; animation: none !important; transform: none !important; }
+  .loop-img { animation: none !important; clip-path: none !important; }
+  .stage-flow { margin-top: 0; padding-top: 0; padding-bottom: 0; }
+  .step {
+    width: 100%;
+    min-height: 0;
+    padding: 3rem var(--gutter);
+    margin-left: 0;
+  }
+  .state { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* ---- reduced motion --------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .loop-img  { animation: none !important; clip-path: none !important; }
+  .loop-art  { animation: none !important; }
+  .step      { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .cta       { transition: none; }
+  .stage.js.parked .loop-art { transition: none; }
+}
