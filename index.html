@@ -16,13 +16,11 @@
 <body>
 
 <header class="bar">
-  <a class="wordmark" href="/">
-    <img class="wordmark-glyph" src="assets/mark.webp" alt="" width="1560" height="765">
-    <span>Mottainai Labs</span>
-  </a>
+  <!-- No mark in the header: the first sight of the logo is it painting itself
+       on. Wordmark only. -->
+  <a class="wordmark" href="/"><span>Mottainai Labs</span></a>
   <nav class="bar-nav">
-    <!-- TODO: replace with Cole's LinkedIn URL -->
-    <a class="bar-link" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="bar-link" href="https://www.linkedin.com/company/mottainai-labs-inc" target="_blank" rel="noopener">LinkedIn</a>
     <a class="bar-link" href="mailto:cole.dickerson@mottainailabsai.com">Get in touch</a>
   </nav>
 </header>
@@ -40,7 +38,7 @@
           <defs>
             <mask id="paint" maskUnits="userSpaceOnUse" x="0" y="0" width="520" height="255">
               <path class="paint-path" pathLength="1" fill="none" stroke="#fff"
-                    stroke-width="150" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="150" stroke-linecap="butt" stroke-linejoin="round"
                     d="M60 210 C20 195 15 120 70 85 C120 55 190 75 250 125 C310 175 360 195 420 185 C490 172 512 120 470 80 C425 38 350 45 290 90 C230 135 170 190 110 215 C85 226 70 222 60 210 Z"/>
             </mask>
           </defs>
@@ -87,21 +85,21 @@
     </div>
   </section>
 
-  <section class="band mottainai">
-    <h2 lang="ja">もったいない</h2>
-    <p><i>Mottainai</i> is a Japanese expression of regret at waste, the sense that something still had use left in it. It is said about food, about objects, about time.</p>
-    <p>It is the whole company in one word. The work itself is unglamorous: knowing what you have, so that less of it is lost.</p>
-  </section>
+  <section class="duo">
+    <div class="box">
+      <h2 lang="ja">もったいない</h2>
+      <p><i>Mottainai</i> is a Japanese expression of regret at waste, the sense that something still had use left in it. It is said about food, about objects, about time.</p>
+      <p>It is the whole company in one word. The work itself is unglamorous: knowing what you have, so that less of it is lost.</p>
+    </div>
 
-  <section class="contact">
-    <div class="card">
-      <img class="card-glyph" src="assets/mark.webp" alt="" width="1560" height="765" loading="lazy">
+    <div class="box box-contact">
       <h2>Talk to us</h2>
       <p>We are early, building fast, and happy to go deep on any of it.</p>
-      <a class="cta" href="mailto:cole.dickerson@mottainailabsai.com">cole.dickerson@mottainailabsai.com</a>
-      <!-- TODO: replace with Cole's LinkedIn URL -->
-      <a class="cta cta-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-      <p class="card-meta">Cole Dickerson, Founder</p>
+      <div class="box-actions">
+        <a class="cta" href="mailto:cole.dickerson@mottainailabsai.com">Email us</a>
+        <a class="cta cta-ghost" href="https://www.linkedin.com/company/mottainai-labs-inc" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <p class="card-meta">Cole Dickerson, Founder<br>cole.dickerson@mottainailabsai.com</p>
     </div>
   </section>
 

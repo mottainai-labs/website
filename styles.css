@@ -197,20 +197,23 @@ p:last-child { margin-bottom: 0; }
 
 /* One animation carries the mark's whole journey so the two moves cannot
    fight over the transform property. */
+/* The mark holds full size and slides off the left edge, so it stays large and
+   is cropped by the frame rather than shrinking to fit inside it. */
 @keyframes journey {
-  0%,  22%      { transform: translate(0, 0) scale(1); }            /* painted, centred */
-  32%, 46%      { transform: translate(0, -17vh) scale(.7); }       /* lifts to clear the title */
-  56%, 82%      { transform: translate(-21vw, 22vh) scale(.74); }   /* bottom left, still large */
-  92%, 100%     { transform: translate(-27vw, -4vh) scale(.62); }   /* up left as copy advances */
+  0%,  50%      { transform: translate(0, 0) scale(1); }            /* painted, centred */
+  62%, 84%      { transform: translate(-36vw, 16vh) scale(1); }     /* left, full size, part cropped */
+  93%, 100%     { transform: translate(-42vw, -6vh) scale(.95); }   /* rises as copy advances */
 }
 
 /* The title card is a title: it is meant to arrive and leave. Body copy below
    fades in and holds, because dimming text while it is being read reads as a
    rendering fault. */
+/* Opacity only. The card rises with normal scroll, so it fades out exactly as
+   it reaches and starts to overlap the mark. */
 @keyframes titlecard {
-  0%,  27%      { opacity: 0; transform: translateY(24px); }
-  36%, 46%      { opacity: 1; transform: none; }
-  56%, 100%     { opacity: 0; transform: translateY(-16px); }
+  0%,  33%      { opacity: 0; }
+  42%, 50%      { opacity: 1; }
+  59%, 100%     { opacity: 0; }
 }
 
 @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
@@ -274,44 +277,52 @@ p:last-child { margin-bottom: 0; }
 .cell span { display: block; font-size: .9375rem; color: var(--dim); }
 .cell .eval { color: var(--clay-text); font-weight: 600; }
 
-/* ---- mottainai -------------------------------------------------------- */
+/* ---- philosophy and contact, side by side ------------------------------ */
 
-.mottainai h2 { font-size: clamp(1.75rem, 3.6vw, 2.375rem); letter-spacing: .02em; line-height: 1.3; }
+.duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+  padding: clamp(3rem, 9vh, 6rem) var(--gutter) clamp(3rem, 9vh, 6rem);
+  max-width: 78rem;
+  margin-inline: auto;
+}
 
-/* ---- contact card ----------------------------------------------------- */
-
-.contact { display: grid; place-items: center; padding: clamp(2rem, 6vh, 4rem) var(--gutter) clamp(3rem, 9vh, 6rem); }
-
-.card {
-  width: min(29rem, 100%);
-  padding: clamp(1.75rem, 4vw, 2.5rem);
+.box {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
   border-radius: 20px;
   background: var(--card);
   border: 1px solid var(--hairline);
-  text-align: center;
 }
-.card-glyph { width: 60px; height: auto; margin: 0 auto 1rem; display: block; }
-.card h2 { margin-bottom: .6rem; }
-.card p { max-width: none; color: var(--dim); }
-.card .cta { margin: .5rem 0 0; word-break: break-word; }
-.card .cta:first-of-type { margin-top: 1.25rem; }
-.card-meta { font-size: .9375rem; margin: 1.25rem 0 0; }
+.box p { max-width: none; }
+.box h2 { font-size: clamp(1.5rem, 2.8vw, 2rem); }
+.box [lang="ja"] { letter-spacing: .02em; line-height: 1.3; }
+
+.box-contact { background: color-mix(in srgb, var(--sage) 12%, var(--card)); }
+.box-contact p { color: var(--dim); }
+
+.box-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0 auto; }
+.card-meta { font-size: .9375rem; color: var(--dim); margin: 2rem 0 0; line-height: 1.55; }
 
 /* ---- footer ----------------------------------------------------------- */
 
 .foot {
-  padding: 1.5rem var(--gutter) 2.5rem;
-  border-top: 1px solid var(--hairline);
+  padding: 2rem var(--gutter);
+  background: var(--pine);
+  color: color-mix(in srgb, var(--cream) 76%, transparent);
   display: flex;
   flex-wrap: wrap;
   gap: .35rem 2rem;
   justify-content: space-between;
   align-items: center;
   font-size: .9375rem;
-  color: var(--dim);
 }
 .foot p { margin: 0; max-width: none; }
-.foot a { display: inline-block; padding: .6rem 0; }
+.foot a { display: inline-block; padding: .6rem 0; color: var(--cream); }
+.foot :focus-visible { outline-color: var(--cream); }
 
 /* ---- small screens ---------------------------------------------------- */
 
@@ -328,6 +339,7 @@ p:last-child { margin-bottom: 0; }
   .title-card .lede { margin-left: 0; }
   .step { width: 100%; min-height: 0; margin-left: 0; padding: 2.5rem var(--gutter); }
   .state { grid-template-columns: 1fr; gap: 1.1rem; }
+  .duo { grid-template-columns: 1fr; }
 }
 
 /* ---- reduced motion --------------------------------------------------- */
